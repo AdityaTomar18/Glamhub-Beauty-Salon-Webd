@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Glamhub</title>
+  <link rel="stylesheet" href="main.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('photos/1.jpg') no-repeat center/cover;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(4px);          
+      z-index: -1;                        
+    }
+    .error { color:red; font-size:14px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">GlamHub</div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="register.html" class="signin-btn">Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <div class="form-container">
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="return validateLogin(event)">
+      <input type="email" id="loginEmail" placeholder="Email">
+      <div id="loginEmailError" class="error"></div>
+
+      <input type="password" id="loginPassword" placeholder="Password">
+      <div id="loginPasswordError" class="error"></div>
+
+      <button type="submit">Login</button>
+    </form>
+    <p style="text-align:center; margin-top:10px;">
+      Not registered? <a href="register.html">Sign up here</a>
+    </p>
+  </div>
+
+  <script>
+    function validateLogin(event) {
+      event.preventDefault();
+
+      ["loginEmailError","loginPasswordError"].forEach(id => document.getElementById(id).textContent="");
+
+      let valid = true;
+
+      // Email
+      const email = document.getElementById("loginEmail").value.trim();
+      const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
+      if (!email) {
+        document.getElementById("loginEmailError").textContent = "Email is required.";
+        valid = false;
+      } else if (!emailPattern.test(email)) {
+        document.getElementById("loginEmailError").textContent = "Invalid email format.";
+        valid = false;
+      }
+
+      // Password
+      const password = document.getElementById("loginPassword").value.trim();
+      if (!password) {
+        document.getElementById("loginPasswordError").textContent = "Password is required.";
+        valid = false;
+      } else if (password.length < 8) {
+        document.getElementById("loginPasswordError").textContent = "Password must be at least 8 characters.";
+        valid = false;
+      }
+
+      // Success
+      if (valid) {
+        alert("Login successful (demo)!");
+        window.location.href = "home.html";
+      }
+      return valid;
+    }
+  </script>
+</body>
+</html>
